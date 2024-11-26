@@ -27,7 +27,6 @@ class HomePage extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-
                 // sample shedule for the current time
                 DateTime durationSample = DateTime.now().add(
                   const Duration(seconds: 5),
@@ -44,9 +43,25 @@ class HomePage extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
+            ElevatedButton(
+              onPressed: () {
+                LocalNotificationsService.showBigPictureNotification(
+                  title: "This is a big picture notification",
+                  body: "creating notification",
+                  imageUrl: "@mipmap/ic_launcher",
+                );
+              },
+              child: const Text(
+                "Big Picture notifications",
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
           ],
         ),
       ),
     );
   }
+  
 }
