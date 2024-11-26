@@ -1,5 +1,3 @@
-
-
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/widgets.dart';
 
@@ -23,6 +21,7 @@ class PushNotificationsService {
       print('User granted permission');
     } else {
       print('User declined or has not accepted permission');
+      return;
     }
 
     //get the FCM (Firebase Cloud Messagin) token from the device
@@ -40,7 +39,10 @@ class PushNotificationsService {
   // on background notification tapped function (pass the payload data to the message opener screen)
   static Future<void> onBackgroundNotificationTapped(
       RemoteMessage message, GlobalKey<NavigatorState> navigatorKey) async {
-    navigatorKey.currentState!.pushNamed('/message', arguments: message);
+    navigatorKey.currentState!.pushNamed(
+      '/data-screen',
+      arguments: message,
+    );
   }
 
   //handle foreground notifications
@@ -67,8 +69,6 @@ class PushNotificationsService {
   //     //   navigatorKey.currentState!
   //     //       .pushNamed("/message", arguments: notificationResponse);
   //     // }
-
-
 
   //     //this will automatically display the payload page
   //     await navigatorKey.currentState!

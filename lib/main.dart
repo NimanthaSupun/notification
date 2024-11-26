@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:notify/firebase_options.dart';
 import 'package:notify/notifications/local_notifications.dart';
 import 'package:notify/notifications/push_notifications.dart';
+import 'package:notify/screens/data_open.dart';
 import 'package:notify/screens/home_page.dart';
 import 'package:timezone/data/latest.dart' as tz;
 
@@ -49,15 +50,15 @@ void main() async {
   // });
 
   // for handling in terminated state
-  final RemoteMessage? message =
-      await FirebaseMessaging.instance.getInitialMessage();
+  // final RemoteMessage? message =
+  //     await FirebaseMessaging.instance.getInitialMessage();
 
-  if (message != null) {
-    print("Launched from terminated state");
-    Future.delayed(const Duration(seconds: 1), () {
-      navigatorKey.currentState!.pushNamed("/message", arguments: message);
-    });
-  }
+  // if (message != null) {
+  //   print("Launched from terminated state");
+  //   Future.delayed(const Duration(seconds: 1), () {
+  //     navigatorKey.currentState!.pushNamed("/message", arguments: message);
+  //   });
+  // }
 
 
   runApp(const MyApp());
@@ -80,6 +81,7 @@ class _MyAppState extends State<MyApp> {
       title: 'Notification App',
       routes: {
         '/': (context) => const HomePage(),
+        "/data-screen" : (context) =>  DataOpenr(),
       },
     );
   }
