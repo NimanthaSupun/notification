@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:notify/notifications/local_notifications.dart';
 import 'package:notify/screens/home_page.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -8,6 +9,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // initialize local notification service
   await LocalNotificationsService.init();
+
+  // initialized timezone
+  tz.initializeTimeZones();
 
   runApp(const MyApp());
 }

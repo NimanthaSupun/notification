@@ -22,6 +22,28 @@ class HomePage extends StatelessWidget {
               },
               child: const Text("Show Instance notifications"),
             ),
+            const SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(
+              onPressed: () {
+
+                // sample shedule for the current time
+                DateTime durationSample = DateTime.now().add(
+                  const Duration(seconds: 5),
+                );
+
+                LocalNotificationsService.scheduleNotification(
+                  title: "This is a schedule notifications",
+                  body: "creating notifications",
+                  scheduledDate: durationSample,
+                );
+              },
+              child: const Text("schedule notifications"),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
           ],
         ),
       ),
