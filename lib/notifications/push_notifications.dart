@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/widgets.dart';
+import 'package:notify/notifications/local_notifications.dart';
 
 class PushNotificationsService {
   //create an instance of the firebase messaging plugin
@@ -39,40 +42,26 @@ class PushNotificationsService {
   // on background notification tapped function (pass the payload data to the message opener screen)
   static Future<void> onBackgroundNotificationTapped(
       RemoteMessage message, GlobalKey<NavigatorState> navigatorKey) async {
-    navigatorKey.currentState!.pushNamed(
-      '/data-screen',
-      arguments: message,
-    );
+   
   }
 
   //handle foreground notifications
-  // static Future<void> onForeroundNotificationTapped(
-  //   RemoteMessage message,
-  //   GlobalKey<NavigatorState> navigatorKey,
-  // ) async {
-  //   String payloadData = jsonEncode(message.data);
+  static Future<void> onForeroundNotificationTapped(
+    RemoteMessage message,
+    GlobalKey<NavigatorState> navigatorKey,
+  ) async {
+    String payloadData = jsonEncode(message.data);
 
-  //   print("Got the message in foreground");
+    print("Got the message in foreground");
 
-  //   if (message.notification != null) {
-  //     await LocalNotificationService.showInstantNotificationWithPayload(
-  //       title: message.notification!.title!,
-  //       body: message.notification!.body!,
-  //       payload: payloadData,
-  //     );
-
-  //     // TODO:Here to click the notification we can toggle the :onDidReceiveNotificationResponse: property in the localnotifications init function but will teach that in the lesson to avoid coflicts
-  //     // here is the methode
-
-  //     // on tap local notification in foreground
-  //     // static void onNotificationTap(NotificationResponse notificationResponse) {
-  //     //   navigatorKey.currentState!
-  //     //       .pushNamed("/message", arguments: notificationResponse);
-  //     // }
-
-  //     //this will automatically display the payload page
-  //     await navigatorKey.currentState!
-  //         .pushNamed('/message', arguments: message);
-  //   }
-  // }
+    if (message.notification != null) {
+      await LocalNotificationsService.showInstantNotificationWithPayload(
+        title: message.notification!.title!,
+        body: message.notification!.body!,
+        payload: payloadData,
+      );
+      await navigatorKey.currentState!
+          .pushNamed('/data-screen', arguments: message);
+    }
+  }
 }

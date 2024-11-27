@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class DataOpenr extends StatelessWidget {
   DataOpenr({super.key});
@@ -13,6 +16,10 @@ class DataOpenr extends StatelessWidget {
       payload = data.data;
     }
 
+    if (data is NotificationResponse) {
+      payload = jsonDecode(data.payload!);
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Notifications Recived"),
@@ -20,9 +27,7 @@ class DataOpenr extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            Text(
-              "Name: ${payload['name']}"
-            ),
+            Text("Name: ${payload['name']}"),
             Text("Age: ${payload['age']}")
           ],
         ),

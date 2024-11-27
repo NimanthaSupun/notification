@@ -23,7 +23,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-    //initialize the push notification service (PushNotificationsService)
+  //initialize the push notification service (PushNotificationsService)
   await PushNotificationsService.init();
 
   //listen for incoming messages in background
@@ -42,24 +42,23 @@ void main() async {
   });
 
   // on foreground notification tapped
-  // FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-  //   await PushNotificationsService.onForeroundNotificationTapped(
-  //     message,
-  //     navigatorKey,
-  //   );
-  // });
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+    await PushNotificationsService.onForeroundNotificationTapped(
+      message,
+      navigatorKey,
+    );
+  });
 
   // for handling in terminated state
-  // final RemoteMessage? message =
-  //     await FirebaseMessaging.instance.getInitialMessage();
+  final RemoteMessage? message =
+      await FirebaseMessaging.instance.getInitialMessage();
 
-  // if (message != null) {
-  //   print("Launched from terminated state");
-  //   Future.delayed(const Duration(seconds: 1), () {
-  //     navigatorKey.currentState!.pushNamed("/message", arguments: message);
-  //   });
-  // }
-
+  if (message != null) {
+    print("Launched from terminated state");
+    Future.delayed(const Duration(seconds: 1), () {
+      navigatorKey.currentState!.pushNamed("/data-screen", arguments: message);
+    });
+  }
 
   runApp(const MyApp());
 }
@@ -81,7 +80,7 @@ class _MyAppState extends State<MyApp> {
       title: 'Notification App',
       routes: {
         '/': (context) => const HomePage(),
-        "/data-screen" : (context) =>  DataOpenr(),
+        "/data-screen": (context) => DataOpenr(),
       },
     );
   }

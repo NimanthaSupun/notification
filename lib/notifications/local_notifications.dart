@@ -1,4 +1,5 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:notify/main.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 class LocalNotificationsService {
@@ -6,7 +7,12 @@ class LocalNotificationsService {
       _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
   static Future<void> onDidReceiveBackgroundNotificationResponse(
-      NotificationResponse notificationResponse) async {}
+      NotificationResponse notificationResponse) async {
+         navigatorKey.currentState!.pushNamed(
+      '/data-screen',
+      arguments: notificationResponse,
+    );
+      }
 
   static Future<void> init() async {
     // android
